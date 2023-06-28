@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "cart" do %>
+
+    <% if @cart && @cart.order_tickets.count > 0 %>
+        <%= render "cart/order_tickets" %>
+        
+    <% else %>
+        <p>Cart is empty</p>
+    <% end %>
+
+<% end %>

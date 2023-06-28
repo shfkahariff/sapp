@@ -1,0 +1,41 @@
+<div id="<%= dom_id @cart %>">
+    <p>
+        <strong>Name:</strong>
+        <%= @cart.name %>
+    </p>
+    <p>
+        <strong>Email:</strong>
+        <%= @cart.email %>
+    </p>
+    <p>
+        <strong>Phone:</strong>
+        <%= @cart.phone %>
+    </p>
+    <p>
+        <strong>Event Name:</strong>
+        <% if @cart.order_tickets.any? %>
+            <%= @cart.order_tickets.first.ticket.event.title %>
+        <% else %>
+            Event not available
+        <% end %>
+    </p>
+    <p>
+        <strong>Order Tickets:</strong>
+        <ul>
+            <% @cart.order_tickets.each do |order_ticket| %>
+            <li>
+                <%= order_ticket.ticket.name %>
+                (RM <%= order_ticket.ticket.price %> x <%= order_ticket.quantity %>)
+            </li>
+            <% end %>
+        </ul>
+    </p>
+    <p>
+        <strong>Total:</strong>
+        RM <%= @cart.total %>
+    </p>
+
+    <%= link_to 'Ticket', print_cart_path(@cart, format: :pdf), class: 'btn btn-primary' %>
+
+
+</div>

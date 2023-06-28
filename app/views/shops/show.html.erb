@@ -1,0 +1,49 @@
+<h1>Shops#show</h1>
+<p>Find me in app/views/shops/show.html.erb</p>
+<div id="<%= dom_id @event %>">
+  <p>
+    <strong>Title:</strong>
+    <%= @event.title %>
+  </p>
+
+  <p>
+    <strong>Location:</strong>
+    <%= @event.location %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @event.description %>
+  </p>
+
+  <p>
+    <strong>Ticket:</strong>
+
+    <%= form_with(url: cart_add_all_path, method: :post, data: { turbo_frame: 'cart' }) do |f| %>
+    
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Type</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity Available</th>
+          <th scope="col">Qty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @event.tickets.each do |ticket| %>
+          <tr>
+            <td><%= ticket.name %></td>
+            <td>RM <%= ticket.price %></td>
+            <td><%= ticket.quantity %></td>
+            <td>
+              <%= f.number_field :tickets, value: 0, min: 0, max: ticket.quantity, name: "tickets[#{ticket.id}][quantity]" %>
+              <%= f.hidden_field :tickets, value: ticket.id, name: "tickets[#{ticket.id}][id]" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= f.submit 'Buy Tickets', class: 'btn btn-primary' %>
+  <% end %>
+</div>
